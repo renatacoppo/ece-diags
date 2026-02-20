@@ -1516,10 +1516,11 @@ def plot_all_slopes(slope_dict, r2_dict=None, vmin=-3, vmax=3, cmap='RdBu_r',
     import matplotlib.pyplot as plt
     import cartopy.crs as ccrs
     import numpy as np
+    import math
 
     n = len(slope_dict)
-    ncols = 3
-    nrows = int(np.ceil(n / ncols))
+    ncols = math.ceil(math.sqrt(n))
+    nrows = math.ceil(n / ncols)
 
     fig, axs = plt.subplots(
         nrows, ncols,
@@ -1842,4 +1843,31 @@ def main(config_path = None):
 
 # Main execution
 if __name__ == '__main__':
+    user = 'ecme3038'
+    exps = [f'k0{i:02d}' for i in range(33)]
+
+    cart_exp = '/ec/res4/scratch/{}/ece4/'
+    cart_out = '/ec/res4/hpcperm/ecme3038/ecearth/ecearth4/analysis/tuning/'
+    ref_exp= 'k000'
+    
+    param_map = {
+        "RPRCON":  ["k001", "k002"],
+        "ENTRORG": ["k003", "k004"],
+        "DETRPEN": ["k005", "k006"],
+        "ENTRDD":  ["k007", "k008"],
+        "RMFDEPS": ["k009", "k010"],
+        "RVICE":   ["k011", "k012"],
+        "RLCRITSNOW": ["k013", "k014"],
+        "RSNOWLIN2":  ["k015", "k016"],
+        "RCLDIFF": ["k017", "k018"],
+        "RCLDIFF_CONVI": ["k019", "k020"],
+        "RDEPLIQREFRATE": ["k021", "k022"],
+        "RDEPLIQREFDEPTH": ["k023", "k024"],
+        "RCL_OVERLAPLIQICE": ["k025", "k026"],
+        "RCL_INHOMOGAUT": ["k027", "k028"],
+        "RCL_INHOMOGACC": ["k029", "k030"],
+        "RMINICE": ["k031", "k032"]
+    }
+
+    slope_patterns = calc_and_plot_slopes_from_raw(param_map, ref_exp='k000', user=user, cart_exp=cart_exp, var='toa_net', threshold=0.1, target_grid='r180x90')
     main()
