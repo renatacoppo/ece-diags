@@ -469,7 +469,7 @@ def read_output(exps, user = None, read_again = [], cart_exp = cart_exp, cart_ou
         print(exp)
         coupled = False
         if not atm_only: 
-            if len(glob.glob(filz_nemo[exp])) > 0 or os.path.exists(cart_out + f'clim_oce_tuning_{exp}.nc') or os.path.exists(cart_out + f'oce_tuning_{exp}.nc'):
+            if len(filz_nemo[exp]) > 0 or os.path.exists(cart_out + f'clim_oce_tuning_{exp}.nc') or os.path.exists(cart_out + f'oce_tuning_{exp}.nc'):
                 print('coupled')
                 coupled = True
             else:
